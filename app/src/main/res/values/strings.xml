@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">lab5</string>
+    <string name="set_complexity">Задать сложность</string>
+    <string name="desc">Задумано двузначное число</string>
+    <string name="guessText">Отгадать</string>
+    <string name="restartText">Заново</string>
+    <string name="numIsHigher">Задуманое число больше</string>
+    <string name="numIsLower">Задуманое число меньше</string>
+    <string name="dialogTitle">Важное сообщение!</string>
+    <string name="dialogMsg">"Выберите длинну угадываемого числа"</string>
+
+
+
+    <string-array name="diaps_array">
+        <item>@string/_2</item>
+        <item>@string/_3</item>
+        <item>@string/_4</item>
+    </string-array>
+
+    <string name="_2">Задумано двузначное число</string>
+    <string name="_3">Задумано 3х-значное число</string>
+    <string name="_4">Задумано 4х-значное число</string>
+
+
+
+</resources>
