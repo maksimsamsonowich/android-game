@@ -8,7 +8,11 @@
     <string name="numIsLower">Задуманое число меньше</string>
     <string name="dialogTitle">Важное сообщение!</string>
     <string name="dialogMsg">"Выберите длинну угадываемого числа"</string>
-
+    <string name="ok">Выбрать</string>
+    <string name="cancel">Отмена</string>
+    <string name="share">Поделиться результатом</string>
+    <string name="nickname">СуперИгрок</string>
+    <string name="chngName">Изменить имя</string>
 
 
     <string-array name="diaps_array">
@@ -20,7 +24,6 @@
     <string name="_2">Задумано двузначное число</string>
     <string name="_3">Задумано 3х-значное число</string>
     <string name="_4">Задумано 4х-значное число</string>
-
 
 
 </resources>

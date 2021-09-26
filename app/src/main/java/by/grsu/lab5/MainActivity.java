@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,15 +20,20 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     Dialog dialog;
+    private int mode = 2;
     private int attempts = 5;
     private int lengthOfNumber = 2;
     private int comp_num = 0;
+    final int REQUEST_CODE = 1;
+    public static String NICK_MES = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i ("MainActivity", "Угадай число. onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //comp_num = guessNum.rnd_comp_num(lengthOfNumber);
     }
 
     public void setComplexity(View view) {
@@ -36,42 +43,61 @@ public class MainActivity extends AppCompatActivity {
     public Dialog onCreateDialog() {
         Log.i ("MainActivity", "Угадай число. onCreateDialog()");
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(R.string.dialogTitle)
-                .setMessage(R.string.dialogMsg)
-                .setPositiveButton("2-значное", (dialog, id) -> {
-                    attempts = 5;
-                    lengthOfNumber = 2;
-                    ((TextView)findViewById(R.id.showMsg)).setText(R.string._2);
-                    ((TextView)findViewById(R.id.showAttemptsLeft)).setText(attempts);
-                    comp_num = guessNum.rnd_comp_num(lengthOfNumber);
-                    Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num);
-                    dialog.cancel();
-                })
-                .setPositiveButton("3х-значное", (dialog, which) -> {
-                    attempts = 7;
-                    lengthOfNumber = 3;
-                    ((TextView)findViewById(R.id.showMsg)).setText(R.string._3);
-                    ((TextView)findViewById(R.id.showAttemptsLeft)).setText(attempts);
-                    comp_num = guessNum.rnd_comp_num(lengthOfNumber);
-                    Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num);
-                    dialog.cancel();
-                })
-                .setPositiveButton("4х-значное", (dialog, which) -> {
-                    attempts = 10;
-                    lengthOfNumber = 4;
-                    ((TextView)findViewById(R.id.showMsg)).setText(R.string._4);
-                    ((TextView)findViewById(R.id.showAttemptsLeft)).setText(attempts);
-                    Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num);
-                    comp_num = guessNum.rnd_comp_num(lengthOfNumber);
-                    dialog.cancel();
-                });
-        
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                switch (mode) {
+                    case 3:
+                        attempts = 7;
+                        ((TextView)findViewById(R.id.showMsg)).setText(R.string._3);
+                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText("         " + attempts);
+                        break;
+                    case 4:
+                        attempts = 10;
+                        ((TextView)findViewById(R.id.showMsg)).setText(R.string._4);
+                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText("         " + attempts);
+                        break;
+                    default:
+                        attempts = 5;
+                        ((TextView)findViewById(R.id.showMsg)).setText(R.string._2);
+                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText("         " + attempts);
+                        break;
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        builder.setSingleChoiceItems(R.array.diaps_array, mode-2, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 1:
+                        mode = 3;
+                        comp_num = guessNum.rnd_comp_num(3);
+                        break;
+                    case 2:
+                        mode = 4;
+                        comp_num = guessNum.rnd_comp_num(4);
+                        break;
+                    default:
+                        mode = 2;
+                        comp_num = guessNum.rnd_comp_num(2);
+                        break;
+                }
+
+                // The 'which' argument contains the index position of the selected item
+            }
+        });
+
         
         return builder.create();
     }
 
     public void guess(View view) {
-        if (Integer.parseInt(((EditText) findViewById(R.id.txt_hint)).getText().toString()) == comp_num) {
+        int userAnswer = Integer.parseInt(((EditText) findViewById(R.id.name)).getText().toString());
+        if (userAnswer == comp_num) {
             Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num + ". Победа.");
             Toast t = Toast.makeText(this,"Поздравляю!",Toast.LENGTH_LONG);
             t.show();
@@ -79,12 +105,12 @@ public class MainActivity extends AppCompatActivity {
             ((Button)findViewById(R.id.guessButton)).setClickable(false);
 
         } else {
-            ((EditText) findViewById(R.id.txt_hint)).setText("");
+            ((EditText) findViewById(R.id.name)).setText("");
             attempts--;
             if (attempts != 0) {
-                ((TextView) findViewById(R.id.showAttemptsLeft)).setText(attempts);
+                ((TextView) findViewById(R.id.showAttemptsLeft)).setText(Integer.toString(attempts));
                 Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num + ". Неудача.");
-                if (comp_num < Integer.parseInt(((EditText) findViewById(R.id.txt_hint)).getText().toString())) {
+                if (comp_num < userAnswer) {
                     ((TextView)findViewById(R.id.showMsg)).setText(R.string.numIsLower);
                 } else {
                     ((TextView)findViewById(R.id.showMsg)).setText(R.string.numIsHigher);
@@ -101,10 +127,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void save(View view) {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        String shareBody = "Nickname: "
+                + ((TextView)findViewById(R.id.nameText)).getText().toString() +
+                "\nNumber: " + Integer.toString(comp_num) + "\nAttempts left: " + attempts;
+        intent.setType("text/plain");
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Game result");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(intent, "Save to"));
+    }
+
     public void restart(View view) {
         Log.i ("MainActivity", "Рестарт.");
         ((Button)findViewById(R.id.guessButton)).setClickable(true);
         onCreateDialog().show();
+    }
+
+    public void goToAct(View view) {
+        Intent intent = new Intent(this, changeNameAct.class);
+
+        intent.putExtra(NICK_MES, ((TextView)findViewById(R.id.nameText)).getText().toString());
+
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.i("MainActivity", "onActivityResult()");
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode){
+                case REQUEST_CODE: String name = data.getStringExtra("nick");
+                    ((TextView)findViewById(R.id.nameText)).setText(name);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

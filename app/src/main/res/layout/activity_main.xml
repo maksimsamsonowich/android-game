@@ -7,11 +7,10 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="401dp"
+        android:layout_height="712dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,7 @@
             android:text="5" />
 
         <EditText
-            android:id="@+id/txt_hint"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
@@ -55,7 +54,29 @@
             android:id="@+id/restartButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="restart"
             android:text="@string/restartText" />
 
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="save"
+            android:text="@string/share" />
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname" />
+
+        <Button
+            android:id="@+id/changeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goToAct"
+            android:text="@string/chngName" />
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
