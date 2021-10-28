@@ -152,8 +152,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void guess(View view) {
-        getNotification();
-        int userAnswer = Integer.parseInt(((EditText) findViewById(R.id.name)).getText().toString());
+        int userAnswer = 0;
+        try {
+            userAnswer = Integer.parseInt(((EditText) findViewById(R.id.name)).getText().toString());
+        } catch (Exception ex) {
+            return;
+        }
         if (userAnswer == comp_num) {
             Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num + ". Победа.");
             Toast t = Toast.makeText(this,"Поздравляю!",Toast.LENGTH_LONG);
