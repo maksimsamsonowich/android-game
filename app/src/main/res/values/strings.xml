@@ -13,6 +13,14 @@
     <string name="share">Поделиться результатом</string>
     <string name="nickname">СуперИгрок</string>
     <string name="chngName">Изменить имя</string>
+    <string name="settings">Настроки</string>
+    <string name="author">Об авторе</string>
+    <string name="leave">Выход</string>
+    <string name="aboutTeam1">Наша команда состоит из 3-х человек!</string>
+    <string name="aboutTeam2">Максим Самсонович - разработчик</string>
+    <string name="aboutTeam3">Матвей Ганевич - UI-developer</string>
+    <string name="aboutTeam4">Михаил Дейкун - тестировщик</string>
+
 
 
     <string-array name="diaps_array">

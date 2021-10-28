@@ -2,13 +2,19 @@ package by.grsu.lab5;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +39,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // для aboutMenuItem необходимо создавать контекстное меню
+        TextView mI = (TextView) findViewById(R.id.showMsg);
+        registerForContextMenu(mI);
+
+
         //comp_num = guessNum.rnd_comp_num(lengthOfNumber);
+    }
+
+    final int about = 1;
+    final int not = 2;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(0, about, 0, "Об авторах");
+        menu.add(0, not, 0, "Отправить уведомление");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        switch (item.getItemId()) {
+            // пункты меню для tvColor
+            case about:
+                goToAuthor();
+                break;
+            case not:
+                getNotification();
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
     public void setComplexity(View view) {
@@ -95,7 +131,28 @@ public class MainActivity extends AppCompatActivity {
         return builder.create();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu); //запуск меню
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.settingsMenuItem:
+                onCreateDialog().show();
+                break;
+            case R.id.aboutMenuItem:
+                goToAuthor();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void guess(View view) {
+        getNotification();
         int userAnswer = Integer.parseInt(((EditText) findViewById(R.id.name)).getText().toString());
         if (userAnswer == comp_num) {
             Log.d ("MainActivity", "Выбрана длина числа " + lengthOfNumber + ". Загаданное число " + comp_num + ". Победа.");
@@ -148,6 +205,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, changeNameAct.class);
 
         intent.putExtra(NICK_MES, ((TextView)findViewById(R.id.nameText)).getText().toString());
+
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    public void goToAuthor() {
+        Intent intent = new Intent(this, aboutMe.class);
 
         startActivityForResult(intent, REQUEST_CODE);
     }
@@ -210,6 +273,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.i ("MainActivity", "onRestart()");
+    }
+
+    private void getNotification(){
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("Угадай число")
+                        .setContentText("У вас " + attempts + "попыток.");
+
+        Notification notification = builder.build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notification);
     }
 }
 

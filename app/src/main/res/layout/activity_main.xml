@@ -1,82 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="401dp"
-        android:layout_height="712dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
 
-        <Button
-            android:id="@+id/setComplexityButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="setComplexity"
-            android:text="@string/set_complexity" />
+            android:layout_height="58dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
 
-        <TextView
-            android:id="@+id/showMsg"
+            app:toolbarId="@+id/toolbar">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"></androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/desc" />
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/showAttemptsLeft"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="5" />
+            <LinearLayout
+                android:layout_width="401dp"
+                android:layout_height="712dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:minHeight="48dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+                <Button
+                    android:id="@+id/setComplexityButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="setComplexity"
+                    android:text="@string/set_complexity" />
 
-        <Button
-            android:id="@+id/guessButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="guess"
-            android:text="@string/guessText" />
+                <TextView
+                    android:id="@+id/showMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/desc" />
 
-        <Button
-            android:id="@+id/restartButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="restart"
-            android:text="@string/restartText" />
+                <TextView
+                    android:id="@+id/showAttemptsLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5" />
 
-        <Button
-            android:id="@+id/shareButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="save"
-            android:text="@string/share" />
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-        <TextView
-            android:id="@+id/nameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nickname" />
+                <Button
+                    android:id="@+id/guessButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="guess"
+                    android:text="@string/guessText" />
 
-        <Button
-            android:id="@+id/changeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="goToAct"
-            android:text="@string/chngName" />
+                <Button
+                    android:id="@+id/restartButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="restart"
+                    android:text="@string/restartText" />
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/shareButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="save"
+                    android:text="@string/share" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/nameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nickname" />
+
+                <Button
+                    android:id="@+id/changeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="goToAct"
+                    android:text="@string/chngName" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

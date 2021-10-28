@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab5">
         <activity
+            android:name=".aboutMe"
+            android:exported="true" />
+        <activity
             android:name=".changeNameAct"
             android:exported="true" />
         <activity
