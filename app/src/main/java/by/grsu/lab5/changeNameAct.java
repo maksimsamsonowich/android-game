@@ -18,7 +18,6 @@ public class changeNameAct extends AppCompatActivity {
     }
 
     private void handleIntent() {
-        Intent intent = getIntent();
         String txtName = getIntent().getStringExtra("name");
 
         if (txtName != null) {

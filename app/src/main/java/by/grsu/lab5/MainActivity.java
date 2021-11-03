@@ -25,7 +25,6 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    Dialog dialog;
     private int mode = 2;
     private int attempts = 5;
     private int lengthOfNumber = 2;
@@ -40,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // для aboutMenuItem необходимо создавать контекстное меню
-        TextView mI = (TextView) findViewById(R.id.showMsg);
+        TextView mI = findViewById(R.id.showMsg);
         registerForContextMenu(mI);
 
 
-        //comp_num = guessNum.rnd_comp_num(lengthOfNumber);
+        comp_num = guessNum.rnd_comp_num(lengthOfNumber);
     }
 
     final int about = 1;
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
+
         switch (item.getItemId()) {
             // пункты меню для tvColor
             case about:
@@ -86,24 +85,24 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         attempts = 7;
                         ((TextView)findViewById(R.id.showMsg)).setText(R.string._3);
-                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText("         " + attempts);
+                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText(attempts);
                         break;
                     case 4:
                         attempts = 10;
                         ((TextView)findViewById(R.id.showMsg)).setText(R.string._4);
-                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText("         " + attempts);
+                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText(attempts);
                         break;
                     default:
                         attempts = 5;
                         ((TextView)findViewById(R.id.showMsg)).setText(R.string._2);
-                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText("         " + attempts);
+                        ((TextView)findViewById(R.id.showAttemptsLeft)).setText(attempts);
                         break;
                 }
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
+
             }
         });
         builder.setSingleChoiceItems(R.array.diaps_array, mode-2, new DialogInterface.OnClickListener() {
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu); //запуск меню
+        getMenuInflater().inflate(R.menu.main_menu, menu); //запуск меню
         return true;
     }
 
@@ -163,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             Toast t = Toast.makeText(this,"Поздравляю!",Toast.LENGTH_LONG);
             t.show();
 
-            ((Button)findViewById(R.id.guessButton)).setClickable(false);
+            findViewById(R.id.guessButton).setClickable(false);
 
         } else {
             ((EditText) findViewById(R.id.name)).setText("");
@@ -234,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
